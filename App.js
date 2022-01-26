@@ -4,17 +4,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { CreateStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import UserList from './screens/UserList';
-import UserDetailScreen from './screens/UserDetailScreen';
-import CreateUserScreen from './screens/CreateUserScreen';
+import UserDetail from './screens/UserDetail';
+import CreateUser from './screens/CreateUser';
 
 const Stack = createStackNavigator();
 
 function MyStack() {
   return ( 
     <Stack.Navigator>
+      <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UserList" component={UserList} />
-      <Stack.Screen name="UserDetailScreen" component={UserDetailScreen} />
-      <Stack.Screen name="CreateUserScreen" component={CreateUserScreen} />
+      <Stack.Screen name="UserDetail" component={UserDetail} />
+     
     </Stack.Navigator>
   )
 }
