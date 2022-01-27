@@ -7,15 +7,21 @@ const UserList = (props) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        firebase.db.collection("users")
+          firebase.db.collection("users")
             .onSnapshot(function (querySnapshot) {
                 let users = [];
                 querySnapshot.forEach(function (doc) {
-                    users.push(doc.data());
-                    console.log(doc.data());
+                    const { name, email, phone } = doc.data()
+                    users.push({
+                        id: doc.id,
+                        name,
+                        email,
+                        phone
+                    })
                 });
                 setUsers(users)
                 console.log("users:::" + users)
+
             });
     }, []);
 
@@ -23,14 +29,16 @@ const UserList = (props) => {
         <ScrollView>
             <Button title="Create User" onPress={() => { props.navigation.navigate('CreateUser') }} />
             {
-                users.map(users => {
+                users.map(user => {
                     return (
-                        <ListItem key={users.id} >
+                        <ListItem key={user.id} bottomDivider onPress={() => {
+                            alert("userid: " + user.id)
+                        }} >
                             <ListItem.Chevron />
-                            <Avatar source={{ uri:'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg'}}/>
+                            <Avatar source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }} rounded />
                             <ListItem.Content>
-                                <ListItem.Title>{users.name}</ListItem.Title>
-                                <ListItem.Subtitle>{users.email}</ListItem.Subtitle>
+                                <ListItem.Title>{user.name}</ListItem.Title>
+                                <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
                             </ListItem.Content>
                         </ListItem>
                     )
