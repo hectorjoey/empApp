@@ -10,12 +10,12 @@ import CreateUser from './screens/CreateUser';
 const Stack = createStackNavigator();
 
 function MyStack() {
-  return ( 
+  return (
     <Stack.Navigator>
-      <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UserList" component={UserList} />
+      <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UserDetail" component={UserDetail} />
-     
+
     </Stack.Navigator>
   )
 }
@@ -23,7 +23,7 @@ function MyStack() {
 export default function App() {
   return (
     <NavigationContainer>
-     <MyStack/>
+      <MyStack />
     </NavigationContainer>
   );
 }

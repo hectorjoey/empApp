@@ -3,7 +3,7 @@ import { View, Text, TextInput, ScrollView, StyleSheet, Button } from 'react-nat
 import firebase from "../database/firebase";
 
 
-const CreateUser = () => {
+const CreateUser = (props) => {
 
     const [state, setState] = useState({
         name: '',
@@ -15,7 +15,7 @@ const CreateUser = () => {
         setState({ ...state, [name]: value })
     }
 
-    const AddUser =  () => {
+    const AddUser = async () => {
         if (state.name === '') {
             alert('Please enter name!')
         }
@@ -25,11 +25,17 @@ const CreateUser = () => {
         else if (state.phone === '') {
             alert('Please enter phone!')
         } else {
-             firebase.db.collection('users').add({
-                name: state.name,
-                email: state.email,
-                phone: state.phone,
-            });
+            try {
+                await firebase.db.collection('users').add({
+                    name: state.name,
+                    email: state.email,
+                    phone: state.phone,
+                })
+                alert("Saved Successfully!")
+                props.navigation.navigate('UserList')
+            } catch (error) {
+                console.log(error);
+            }
         }
 
     }
@@ -50,7 +56,7 @@ const CreateUser = () => {
             </View>
 
             <View>
-                <Button title='Save' onPress={()=>{AddUser()}} />
+                <Button title='Save' onPress={() => { AddUser() }} />
             </View>
 
         </ScrollView>
