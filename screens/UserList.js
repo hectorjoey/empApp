@@ -7,7 +7,7 @@ const UserList = (props) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-          firebase.db.collection("users")
+        firebase.db.collection("users")
             .onSnapshot(function (querySnapshot) {
                 let users = [];
                 querySnapshot.forEach(function (doc) {
@@ -20,7 +20,6 @@ const UserList = (props) => {
                     })
                 });
                 setUsers(users)
-                console.log("users:::" + users)
 
             });
     }, []);
@@ -31,9 +30,12 @@ const UserList = (props) => {
             {
                 users.map(user => {
                     return (
-                        <ListItem key={user.id} bottomDivider onPress={() => {
-                            alert("userid: " + user.id)
-                        }} >
+                        <ListItem onPress={() => {
+                            props.navigation.navigate("UserDetail", {
+                                userId: user.id,
+                            });
+                            console.log(user.id)
+                        }}>
                             <ListItem.Chevron />
                             <Avatar source={{ uri: 'https://uifaces.co/our-content/donated/6MWH9Xi_.jpg' }} rounded />
                             <ListItem.Content>
